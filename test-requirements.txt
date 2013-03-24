@@ -1,0 +1,5 @@
+# Testing
+coverage
+mock
+pep8
+unittest2
