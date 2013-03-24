@@ -13,6 +13,6 @@ class TestCargo(unittest.TestCase):
 
     def test_import(self):
         cargo = CargoService(self.my_upload_dir)
-        cargo.filename = 'dummy_file.xml'
-        cargo.do_import()
+        filename = 'dummy_import.xml'
+        cargo.do_import(filename)
         self.assertEqual(cargo.size, 3)
