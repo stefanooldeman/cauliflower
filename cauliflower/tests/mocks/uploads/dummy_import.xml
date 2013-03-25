@@ -1,0 +1,23 @@
+<repository>
+    <pattern context="creational">
+        <name>BuilderPattern</name>
+        <problem>complext class construction with different strategies or representations</problem>
+        <solution>create a class builder which can add different components for the to be created object</solution>
+        <diagram></diagram>
+        <consequences>complexity is hidden but adds a lot of noise</consequences>
+    </pattern>
+    <pattern context="creational">
+        <name>FactoryPattern</name>
+        <problem>complex class construction</problem>
+        <solution>abstract the logic into a factory method</solution>
+        <diagram></diagram>
+        <consequences>easy class creation by name or one function call</consequences>
+    </pattern>
+    <pattern context="creational">
+        <name>F</name>
+        <problem></problem>
+        <solution></solution>
+        <diagram></diagram>
+        <consequences></consequences>
+    </pattern>
+</repository>
