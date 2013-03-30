@@ -13,3 +13,16 @@ class PatternXMLMapper(DataMapper):
         super(PatternXMLMapper, self).toEntity(data)
         obj = Pattern()
         return obj
+
+
+class PatternJSONMapper(DataMapper):
+
+    def fromEntity(self, entity):
+        super(PatternJSONMapper, self).fromEntity(entity)
+        xml = ""
+        return xml
+
+    def toEntity(self, data):
+        super(PatternJSONMapper, self).toEntity(data)
+        obj = Pattern()
+        return obj
