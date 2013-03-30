@@ -11,3 +11,6 @@ class DataMapper(object):
         """
         translate raw data (specific representation) into a entity object
         """
+
+    def iterator(self):
+        return iter([])

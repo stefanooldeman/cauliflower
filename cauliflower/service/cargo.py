@@ -12,15 +12,21 @@ class CargoService(object):
             # if last char (-1) is not a slash (/) append it
             basepath += os.sep
 
+        self._file_mapper = None
         self.upload_dir = basepath
+        self.patterns = []
 
     def do_import(self, filepath):
-        if self._checkfile(self.upload_dir + filepath) is False:
+        filepath = self.upload_dir + filepath
+        if self._checkfile(filepath) is False:
             raise errors.ValidationError('filetype is not supported')
 
-        mapper = PatternXMLMapper()
-        mapper.toEntity('')
-        self._size = 0
+        # set the filepath to the mapper, and it will take care
+        mapper = self.file_mapper
+        mapper.filepath = filepath  # Hacky?
+        for row in mapper.iterator():
+            self.patterns.append(mapper.toEntity(row))
+
         return True
 
     def do_export(self, desitnation):
@@ -33,4 +39,16 @@ class CargoService(object):
 
     @property
     def size(self):
-        return self._size
+        return len(self.patterns)
+
+    @property
+    def file_mapper(self):
+        # lazy loading
+        # gives posibility to overwrite (Dependency injection)
+        if self._file_mapper is None:
+            self._file_mapper = PatternXMLMapper()
+        return self._file_mapper
+
+    @file_mapper.setter
+    def file_mapper(self, mapper):
+        self._file_mapper = mapper
