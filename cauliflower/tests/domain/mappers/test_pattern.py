@@ -21,3 +21,8 @@ class TestPatternXMLMapper(unittest.TestCase):
         self.mapper.filepath = thedir + '/empty_import.xml'
         xs = self.mapper.iterator()
         self.assertEqual(len(xs), 0)
+
+    def test_iterator_finds_items(self):
+        self.mapper.filepath = thedir + '/dummy_import.xml'
+        xs = self.mapper.iterator()
+        self.assertEqual(len(xs), 3)

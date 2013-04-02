@@ -1,10 +1,10 @@
 <repository>
     <pattern context="creational">
         <name>BuilderPattern</name>
-        <problem>complext class construction with different strategies or representations</problem>
-        <solution>create a class builder which can add different components for the to be created object</solution>
-        <diagram></diagram>
-        <consequences>complexity is hidden but adds a lot of noise</consequences>
+        <problem>problem1 dork</problem>
+        <solution>solution1 dork</solution>
+        <diagram>foobar.png</diagram>
+        <consequences>consequences1 dork</consequences>
     </pattern>
     <pattern context="creational">
         <name>FactoryPattern</name>

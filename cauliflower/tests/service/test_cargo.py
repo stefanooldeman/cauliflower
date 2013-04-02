@@ -4,19 +4,20 @@ import os
 from cauliflower.service.cargo import CargoService
 import cauliflower.errors as errors
 
+import cauliflower.domain.mappers as dmappers
 from cauliflower.domain.mappers.pattern import PatternXMLMapper
-import cauliflower.domain.mappers.abstract as amapper
+from cauliflower.domain.mappers.pattern import PatternJSONMapper
 
 p = os.path
 thedir = p.abspath(p.dirname(__file__) + "/../mocks/uploads/")
 
 
-class MockedMapper(amapper.DataMapper):
+class MockedMapper(dmappers.abstract.DataMapper):
     def __init__(self):
         self.filepath = ""
 
 
-class TestCargo(unittest.TestCase):
+class TestCargoXML(unittest.TestCase):
 
     def setUp(self):
         self.cargo = CargoService(thedir)
@@ -25,6 +26,16 @@ class TestCargo(unittest.TestCase):
     def test_import(self):
         self.cargo.do_import('dummy_import.xml')
         self.assertEqual(self.cargo.size, 3)
+
+    def test_patterns_loaded_by_import(self):
+        self.cargo.do_import('dummy_import.xml')
+        pattern = self.cargo.patterns[0]
+        self.assertEqual(pattern.name, "BuilderPattern")
+        self.assertEqual(pattern.problem, "problem1 dork")
+        self.assertEqual(pattern.solution, "solution1 dork")
+        self.assertEqual(pattern.context, "creational")
+        self.assertEqual(pattern.consequences, "consequences1 dork")
+        self.assertEqual(pattern.image, "foobar.png")
 
 
 class TestFileChecks(unittest.TestCase):

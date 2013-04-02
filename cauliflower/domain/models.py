@@ -1,3 +1,4 @@
+import collections
 
 
 class Entity(object):
@@ -5,45 +6,49 @@ class Entity(object):
     used in MapperAbsrtact for strictness
     """
 
+    def __init__(self):
+        # to prevent getting non existing variabels
+        self.v = collections.defaultdict()
+
 
 class Pattern(Entity):
 
     @property
     def name(self):
-        return self._name
+        return self.v.get('name')
 
     @name.setter
     def name(self, value):
-        self._name = value
+        self.v['name'] = value
 
     @property
     def context(self):
-        return self._context
+        return self.v.get('context')
 
     @context.setter
     def context(self, value):
-        self._context = value
+        self.v['context'] = value
 
     @property
     def problem(self):
-        return self._problem
+        return self.v.get('problem')
 
     @problem.setter
     def problem(self, value):
-        self._problem = value
+        self.v['problem'] = value
 
     @property
     def solution(self):
-        return self._solution
+        return self.v.get('solution')
 
     @solution.setter
     def solution(self, value):
-        self._solution = value
+        self.v['solution'] = value
 
     @property
     def image(self):
-        return self._image
+        return self.v.get('image')
 
     @image.setter
     def image(self, value):
-        self._image = value
+        self.v['image'] = value

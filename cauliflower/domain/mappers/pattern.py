@@ -13,10 +13,31 @@ class PatternXMLMapper(DataMapper):
         xml = ""
         return xml
 
-    def toEntity(self, data):
-        super(PatternXMLMapper, self).toEntity(data)
-        obj = Pattern()
-        return obj
+    def toEntity(self, node):
+        super(PatternXMLMapper, self).toEntity(node)
+        pattern = Pattern()
+
+        pattern.context = node.getAttributeNode('context').value
+        pattern.name = self._text(node, 'name')
+        pattern.problem = self._text(node, 'problem')
+        pattern.solution = self._text(node, 'solution')
+        pattern.consequences = self._text(node, 'consequences')
+        pattern.image = self._text(node, 'diagram')
+        return pattern
+
+    def _text(self, node, tagname=None):
+        if tagname:
+            try:
+                node = node.getElementsByTagName(tagname)[0]
+                nodelist = node.childNodes
+            except IndexError:
+                nodelist = []
+
+        rc = []
+        for node in nodelist:
+            if node.nodeType == node.TEXT_NODE:
+                rc.append(node.data)
+        return None if len(rc) == 0 else ''.join(rc)
 
     def iterator(self):
         try:
