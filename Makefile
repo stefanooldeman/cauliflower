@@ -3,7 +3,7 @@ clean-pyc:
 	find . -type f -name "*.pyo" -delete
 
 pep8:
-	pep8 --show-pep8 -r cauliflower && echo "All good!"
+	pep8 -r cauliflower && echo "All good!"
 
 unittest: clean-pyc
 	coverage erase
