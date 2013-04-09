@@ -1,0 +1,24 @@
+#!/usr/bin/env python
+
+
+import sys
+import argparse
+from cauliflower.cli import commands, options
+
+parser = argparse.ArgumentParser()
+subparser = parser.add_subparsers(title="The most commonly used cauliflower commands are:",
+                                  help="see cauliflower <command> -h for more information",
+                                  description="")
+
+subs_commands = dict()
+for (name, construct_args) in commands:
+    cmd = subparser.add_parser(name, **construct_args)
+
+    for (cmd_option, option_args) in options.get(name, []):  # default to empty options
+        cmd.add_argument(cmd_option, **option_args)
+        subs_commands[name] = cmd
+
+if len(sys.argv) == 1:
+    parser.print_help()
+
+args = parser.parse_args()
