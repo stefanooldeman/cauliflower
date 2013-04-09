@@ -1,4 +1,3 @@
-import argparse
 from cauliflower.service.cargo import CargoService
 
 # here a dictionairy where the key matches the "subcommand name"
@@ -42,6 +41,22 @@ options = {
             "help": "add a pattern in interaction session",
             })]
 }
+
+def add_commands(parser):
+
+    subparser = parser.add_subparsers(title="The most commonly used cauliflower commands are:",
+                                    help="see cauliflower <command> -h for more information",
+                                    description="")
+
+    subs_commands = dict()
+    for (name, construct_args) in commands:
+        cmd = subparser.add_parser(name, **construct_args)
+
+        for (cmd_option, option_args) in options.get(name, []):  # default to empty options
+            cmd.add_argument(cmd_option, **option_args)
+            subs_commands[name] = cmd
+
+    return parser
 
 
 def add_pattern():
