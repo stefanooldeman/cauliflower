@@ -12,3 +12,7 @@ if len(sys.argv) == 1:
     parser.print_help()
 
 args = parser.parse_args()
+if 'func' in args:
+    args.func(args)
+else:
+    parser.exit(1, "warning: no handler supplied for cmd")
