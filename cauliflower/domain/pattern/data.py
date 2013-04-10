@@ -1,4 +1,4 @@
-from cauliflower.domain.mappers.abstract import DataMapper
+from cauliflower.domain.mapper import DataMapper
 from cauliflower.domain.models import Pattern
 
 import xml.dom.minidom

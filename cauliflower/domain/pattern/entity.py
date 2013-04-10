@@ -1,16 +1,6 @@
 import collections
 
 
-class Entity(object):
-    """
-    used in MapperAbsrtact for strictness
-    """
-
-    def __init__(self):
-        # to prevent getting non existing variabels
-        self.v = collections.defaultdict()
-
-
 class Pattern(Entity):
 
     @property
