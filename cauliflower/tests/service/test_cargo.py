@@ -4,23 +4,30 @@ import os
 from cauliflower.service.cargo import CargoService
 import cauliflower.errors as errors
 
-import cauliflower.domain.abstract as dmappers
+import cauliflower.domain.abstract as abstract
 from cauliflower.domain.pattern import XMLMapper
 
 p = os.path
 thedir = p.abspath(p.dirname(__file__) + "/../mocks/uploads/")
 
 
-class MockedMapper(dmappers.DataMapper):
+class MockedDataMapper(abstract.DataMapper):
     def __init__(self):
         self.filepath = ""
+
+
+class MockedMapper(abstract.Mapper):
+    "note: No external layer to map here"
 
 
 class TestCargoXML(unittest.TestCase):
 
     def setUp(self):
         self.cargo = CargoService(thedir)
-        self.cargo.file_mapper = XMLMapper()
+
+        mapper = MockedMapper()
+        mapper.dataMapper = XMLMapper()
+        self.cargo.pattern_mapper = mapper
 
     def test_import(self):
         self.cargo.do_import('dummy_import.xml')
@@ -41,7 +48,7 @@ class TestFileChecks(unittest.TestCase):
 
     def setUp(self):
         self.cargo = CargoService(thedir)
-        self.cargo.file_mapper = MockedMapper()
+        self.cargo.file_mapper = MockedDataMapper()
 
     def test_do_import_valid_filetypes_returns_true(self):
         self.assertTrue(self.cargo.do_import('dummy_import.xml'))

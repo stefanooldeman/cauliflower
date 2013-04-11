@@ -1,7 +1,6 @@
 from cauliflower.domain.abstract import DataMapper, Entity
 from .entity import Pattern
 
-import xml.dom.minidom
 import xml.parsers.expat
 from xml.dom.minidom import Node
 
@@ -9,12 +8,10 @@ from xml.dom.minidom import Node
 class XMLMapper(DataMapper):
 
     def fromEntity(self, entity):
-        super(XMLMapper, self).fromEntity(entity)
         xml = ""
         return xml
 
     def toEntity(self, node):
-        super(XMLMapper, self).toEntity(node)
         pattern = Pattern()
 
         pattern.context = node.getAttributeNode('context').value
@@ -39,9 +36,8 @@ class XMLMapper(DataMapper):
                 rc.append(node.data)
         return None if len(rc) == 0 else ''.join(rc)
 
-    def iterator(self):
+    def iterator(self, doc):
         try:
-            doc = xml.dom.minidom.parse(self.filepath)
             result = doc.getElementsByTagName('pattern')
         except xml.parsers.expat.ExpatError:
             result = []
@@ -50,9 +46,7 @@ class XMLMapper(DataMapper):
 
 class JSONMapper(DataMapper):
 
-
     def fromEntity(self, entity):
-        super(JSONMapper, self).fromEntity(entity)
         data = {
             'name': entity.name,
             'problem': entity.problem,
@@ -62,12 +56,8 @@ class JSONMapper(DataMapper):
 
         return json.dumps(data)
 
-
-
-
     def toEntity(self, data):
-        super(JSONMapper, self).toEntity(data)
-        data = json.loads('{"name": "mark", "problem": "foobar", "solution": "foobartwo", "diagram": "foobarthree"}')
+        data = json.loads(data)
         obj = Pattern()
         obj.name = data.get('name')
         obj.problem = data.get('problem')
@@ -75,3 +65,5 @@ class JSONMapper(DataMapper):
         obj.diagram = data.get('diagram')
         return obj
 
+    def iterator(self, data):
+        json.loads(data)

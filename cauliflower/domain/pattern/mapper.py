@@ -1,10 +1,11 @@
+from cauliflower.domain.abstract import Mapper
 import cauliflower.domain.storage as storage
 
 
-class Mapper(object):
+class PickleMapper(Mapper):
 
     def __init__(self):
         self.storage = storage.PickleStorage()
 
-    def save(self):
-        pass
+    def save(self, entity):
+        print entity.name

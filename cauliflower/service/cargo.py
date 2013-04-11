@@ -12,20 +12,22 @@ class CargoService(object):
             # if last char (-1) is not a slash (/) append it
             basepath += os.sep
 
-        self._file_mapper = None
+        self._mapper = None
         self.upload_dir = basepath
         self.patterns = []
 
-    def do_import(self, filepath):
-        filepath = self.upload_dir + filepath
-        if self._checkfile(filepath) is False:
-            raise errors.ValidationError('filetype is not supported')
+    def do_import(self, filename):
+        self.filepath = self.upload_dir + filename
+        self._checkfile(self.filepath)
 
-        # set the filepath to the mapper, and it will take care
-        mapper = self.file_mapper
-        mapper.filepath = filepath  # Hacky?
-        for row in mapper.iterator():
-            self.patterns.append(mapper.toEntity(row))
+        import xml.dom.minidom
+        doc = xml.dom.minidom.parse(self.filepath)
+
+        mapper = self.pattern_mapper
+        for row in mapper.iterator(doc):
+            entity = mapper.toEntity(row)
+            mapper.save(entity)
+            self.patterns.append(entity)
 
         return True
 
@@ -33,22 +35,41 @@ class CargoService(object):
         raise NotImplemented
 
     def _checkfile(self, filepath):
-        open(filepath, 'r')
-        (filetype, _) = mimetypes.guess_type(filepath)
-        return bool(filetype.split('/')[1] in ['xml', 'json'])
+        try:
+            open(filepath, 'r')
+        except IOError:
+            print '404, file {} not found'.format(filepath)
+            raise
+
+        (mime, _) = mimetypes.guess_type(filepath)
+        self.filetype = mime.split('/')[1]
+        if self.filetype not in ['xml', 'json']:
+            raise errors.ValidationError('filetype is not supported')
 
     @property
     def size(self):
         return len(self.patterns)
 
     @property
-    def file_mapper(self):
+    def pattern_mapper(self):
         # lazy loading
         # gives posibility to overwrite (Dependency injection)
-        if self._file_mapper is None:
-            self._file_mapper = pattern.XMLMapper()
-        return self._file_mapper
+        if self._mapper is not None:
+            return self._mapper
 
-    @file_mapper.setter
-    def file_mapper(self, mapper):
+        mapper = pattern.PickleMapper()
+
+        if self.filetype == 'xml':
+            dataMapper = pattern.XMLMapper()
+
+        if self.filetype == 'json':
+            dataMapper = pattern.JSONMapper()
+
+        #TODO maybe a Factory pattern would be nice..
+        mapper.dataMapper = dataMapper
+        self._mapper = mapper
+        return self._mapper
+
+    @pattern_mapper.setter
+    def pattern_mapper(self, mapper):
         self._file_mapper = mapper
