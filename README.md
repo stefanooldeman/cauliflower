@@ -12,3 +12,8 @@ like an design pattern which provides common solutions to recurring problems.
 inspiration: https://sites.google.com/site/societyofpatternstext/analogies
 
 Trello board: https://trello.com/b/Pa2QD4Fb
+
+### Examples for cauliflower CLI command
+
+Add a pattern in interactive session:
+`bin/cauliflower pattern -name <pattern-name> --add`
