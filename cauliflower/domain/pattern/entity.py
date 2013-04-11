@@ -1,4 +1,4 @@
-import collections
+from cauliflower.domain.abstract import Entity
 
 
 class Pattern(Entity):

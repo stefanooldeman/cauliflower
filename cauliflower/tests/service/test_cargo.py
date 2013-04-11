@@ -4,15 +4,14 @@ import os
 from cauliflower.service.cargo import CargoService
 import cauliflower.errors as errors
 
-import cauliflower.domain.mappers as dmappers
-from cauliflower.domain.mappers.pattern import PatternXMLMapper
-from cauliflower.domain.mappers.pattern import PatternJSONMapper
+import cauliflower.domain.abstract as dmappers
+from cauliflower.domain.pattern import XMLMapper
 
 p = os.path
 thedir = p.abspath(p.dirname(__file__) + "/../mocks/uploads/")
 
 
-class MockedMapper(dmappers.abstract.DataMapper):
+class MockedMapper(dmappers.DataMapper):
     def __init__(self):
         self.filepath = ""
 
@@ -21,7 +20,7 @@ class TestCargoXML(unittest.TestCase):
 
     def setUp(self):
         self.cargo = CargoService(thedir)
-        self.cargo.file_mapper = PatternXMLMapper()
+        self.cargo.file_mapper = XMLMapper()
 
     def test_import(self):
         self.cargo.do_import('dummy_import.xml')

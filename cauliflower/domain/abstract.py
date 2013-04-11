@@ -1,3 +1,4 @@
+import collections
 
 
 class Entity(object):
@@ -10,6 +11,8 @@ class Entity(object):
         self.v = collections.defaultdict()
 
 
+# maps data from one data type to a common data type
+# to the entity object or as to say Model
 class DataMapper(object):
 
     def fromEntity(self, entity):
