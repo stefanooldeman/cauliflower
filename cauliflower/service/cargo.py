@@ -23,6 +23,8 @@ class CargoService(object):
         if self.filetype == 'xml':
             import xml.dom.minidom
             data = xml.dom.minidom.parse(self.filepath)
+        elif self.filetype == 'json':
+            data = []
 
         mapper = self.pattern_mapper
         for row in mapper.iterator(data):

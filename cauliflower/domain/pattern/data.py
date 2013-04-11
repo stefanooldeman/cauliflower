@@ -1,3 +1,4 @@
+import json
 from cauliflower.domain.abstract import DataMapper, Entity
 from .entity import Pattern
 
