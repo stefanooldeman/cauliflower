@@ -19,4 +19,5 @@ class PickleStorage(object):
         pass
 
     def create(self, filename):
-        self._file = self.basepath + filename
+        pass
+        #self._file = self.basepath + filename
