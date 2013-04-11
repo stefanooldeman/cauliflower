@@ -4,6 +4,10 @@ from cauliflower.domain.abstract import Entity
 class Pattern(Entity):
 
     @property
+    def pkid(self):
+        return self.name
+
+    @property
     def name(self):
         return self.v.get('name')
 

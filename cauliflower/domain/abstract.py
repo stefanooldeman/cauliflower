@@ -15,7 +15,12 @@ class Entity(object):
 
     def __init__(self):
         # to prevent getting non existing variabels
+        self._pkid = None
         self.v = collections.defaultdict()
+
+    @property
+    def pkid(self):
+        raise NotImplemented("provide a pkid from Entity")
 
 
 class DataMapper(object):
@@ -41,19 +46,22 @@ class Mapper(object):
 
     # abstract methods
     def create(self, entity):
-        raise NotImplemented
+        raise NotImplemented()
+
+    def save(self, entity):
+        raise NotImplemented()
 
     def update(self, entity):
-        raise NotImplemented
+        raise NotImplemented()
 
     def delete(self, entity):
-        raise NotImplemented
+        raise NotImplemented()
 
     # proxy methods for DataMappers
     def populate(self, data):
         self.toEntity(data)
 
-    def iterator(self, data):
+    def iterator(self, data=None):
         return self.dataMapper.iterator(data)
 
     def toEntity(self, data):

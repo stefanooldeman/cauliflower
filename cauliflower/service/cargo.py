@@ -20,11 +20,12 @@ class CargoService(object):
         self.filepath = self.upload_dir + filename
         self._checkfile(self.filepath)
 
-        import xml.dom.minidom
-        doc = xml.dom.minidom.parse(self.filepath)
+        if self.filetype == 'xml':
+            import xml.dom.minidom
+            data = xml.dom.minidom.parse(self.filepath)
 
         mapper = self.pattern_mapper
-        for row in mapper.iterator(doc):
+        for row in mapper.iterator(data):
             entity = mapper.toEntity(row)
             mapper.save(entity)
             self.patterns.append(entity)
@@ -38,7 +39,7 @@ class CargoService(object):
         try:
             open(filepath, 'r')
         except IOError:
-            print '404, file {} not found'.format(filepath)
+            print('404, file {} not found').format(filepath)
             raise
 
         (mime, _) = mimetypes.guess_type(filepath)

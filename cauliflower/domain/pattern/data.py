@@ -22,6 +22,7 @@ class XMLMapper(DataMapper):
         pattern.image = self._text(node, 'diagram')
         return pattern
 
+    # logic specific to get extract the textvalue from DOM element
     def _text(self, node, tagname=None):
         if tagname:
             try:
@@ -65,5 +66,5 @@ class JSONMapper(DataMapper):
         obj.diagram = data.get('diagram')
         return obj
 
-    def iterator(self, data):
+    def iterator(self, data=None):
         json.loads(data)

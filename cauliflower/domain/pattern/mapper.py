@@ -8,4 +8,5 @@ class PickleMapper(Mapper):
         self.storage = storage.PickleStorage()
 
     def save(self, entity):
-        print "saved " + entity.name
+        print("saved " + entity.pkid)
+        self.storage.create(entity.pkid)

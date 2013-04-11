@@ -46,7 +46,7 @@ options = {
 def add_pattern(name):
 
     def multi_input(msg):
-        print msg
+        print(msg)
         text = ""
         stopword = "Q"
         while True:
@@ -56,7 +56,7 @@ def add_pattern(name):
             text += "%s\n" % line
         return text
 
-    print "We are going to add the {} Pattern!".format(name)
+    print("We are going to add the {} Pattern!").format(name)
     problem = multi_input("Add the problem description for {pattern_name} . \
             Type Q to end input.".format(pattern_name=name))
     solution = multi_input("Describe the solution {pattern_name} is solving. \
