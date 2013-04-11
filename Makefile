@@ -1,3 +1,6 @@
+loc:
+	find . -type f \( -iname "*.py" ! -iname ".*" \) -exec wc -l {} +
+
 clean-pyc:
 	find . -type f -name "*.pyc" -delete
 	find . -type f -name "*.pyo" -delete
