@@ -1,20 +1,20 @@
-from cauliflower.domain.mappers.abstract import DataMapper
-from cauliflower.domain.models import Pattern
+from cauliflower.domain.abstract import DataMapper, Entity
+from .entity import Pattern
 
 import xml.dom.minidom
 import xml.parsers.expat
 from xml.dom.minidom import Node
 
 
-class PatternXMLMapper(DataMapper):
+class XMLMapper(DataMapper):
 
     def fromEntity(self, entity):
-        super(PatternXMLMapper, self).fromEntity(entity)
+        super(XMLMapper, self).fromEntity(entity)
         xml = ""
         return xml
 
     def toEntity(self, node):
-        super(PatternXMLMapper, self).toEntity(node)
+        super(XMLMapper, self).toEntity(node)
         pattern = Pattern()
 
         pattern.context = node.getAttributeNode('context').value
@@ -48,14 +48,14 @@ class PatternXMLMapper(DataMapper):
         return result
 
 
-class PatternJSONMapper(DataMapper):
+class JSONMapper(DataMapper):
 
     def fromEntity(self, entity):
-        super(PatternJSONMapper, self).fromEntity(entity)
+        super(JSONMapper, self).fromEntity(entity)
         xml = ""
         return xml
 
     def toEntity(self, data):
-        super(PatternJSONMapper, self).toEntity(data)
+        super(JSONMapper, self).toEntity(data)
         obj = Pattern()
         return obj

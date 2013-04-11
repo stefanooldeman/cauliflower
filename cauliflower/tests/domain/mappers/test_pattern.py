@@ -1,5 +1,5 @@
 import unittest
-import cauliflower.domain.mappers.pattern as pmap
+import cauliflower.domain.pattern as pattern
 import os
 
 thedir = os.path.abspath(
@@ -10,7 +10,7 @@ thedir = os.path.abspath(
 class TestPatternXMLMapper(unittest.TestCase):
 
     def setUp(self):
-        self.mapper = pmap.PatternXMLMapper()
+        self.mapper = pattern.XMLMapper()
 
     def test_iterator_finds_items(self):
         self.mapper.filepath = thedir + '/dummy_import.xml'
