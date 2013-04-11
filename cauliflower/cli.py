@@ -25,7 +25,7 @@ options = {
             }
         ),
         ("--file", {
-            #"metavar": "location",
+            "metavar": "filename",
             "type": str,
             "help": "the location or destination for the cargo",
             "required": True
@@ -70,8 +70,14 @@ def add_pattern(name):
 def pattern_handler(args):
     if args.add:
         add_pattern(args.name)
-    #print args
 
+def cargo_handler(args):
+    c = CargoService('/Users/mark/Desktop/')
+    if args.method == 'export':
+        c.do_export(args.location)
+
+    if args.method == 'import':
+        c.do_import(args.filename)
 
 def add_commands(parser):
     subparser = parser.add_subparsers(title="The most commonly used cauliflower commands are:",
@@ -81,6 +87,7 @@ def add_commands(parser):
     # define by which functions a cmd should be handled if aplicable
     hanlders = {
             "pattern": pattern_handler
+            "cargo": cargo_handler
             }
 
     subs_commands = dict()
