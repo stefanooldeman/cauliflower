@@ -1,7 +1,7 @@
 import os
 import mimetypes
 
-from cauliflower.domain.mappers.pattern import PatternXMLMapper
+import cauliflower.domain.pattern as pattern
 import cauliflower.errors as errors
 
 
@@ -46,7 +46,7 @@ class CargoService(object):
         # lazy loading
         # gives posibility to overwrite (Dependency injection)
         if self._file_mapper is None:
-            self._file_mapper = PatternXMLMapper()
+            self._file_mapper = pattern.XMLMapper()
         return self._file_mapper
 
     @file_mapper.setter
