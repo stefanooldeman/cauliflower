@@ -19,6 +19,12 @@ class MockedDataMapper(abstract.DataMapper):
 class MockedMapper(abstract.Mapper):
     "note: No external layer to map here"
 
+    def save(self, x):
+        pass
+
+    def create(self, x):
+        pass
+
 
 class TestCargoXML(unittest.TestCase):
 
@@ -48,7 +54,7 @@ class TestFileChecks(unittest.TestCase):
 
     def setUp(self):
         self.cargo = CargoService(thedir)
-        self.cargo.file_mapper = MockedDataMapper()
+        self.cargo.pattern_mapper = MockedDataMapper()
 
     def test_do_import_valid_filetypes_returns_true(self):
         self.assertTrue(self.cargo.do_import('dummy_import.xml'))

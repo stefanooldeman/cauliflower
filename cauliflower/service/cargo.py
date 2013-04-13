@@ -21,13 +21,14 @@ class CargoService(object):
         self._checkfile(self.filepath)
 
         if self.filetype == 'xml':
-            import xml.dom.minidom
-            data = xml.dom.minidom.parse(self.filepath)
-        elif self.filetype == 'json':
-            data = []
+            dataMapper = pattern.XMLMapper()
+
+        if self.filetype == 'json':
+            dataMapper = pattern.JSONMapper()
 
         mapper = self.pattern_mapper
-        for row in mapper.iterator(data):
+        mapper.dataMapper = dataMapper
+        for row in mapper.iterator(self.filepath):
             entity = mapper.toEntity(row)
             mapper.save(entity)
             self.patterns.append(entity)
@@ -61,18 +62,9 @@ class CargoService(object):
             return self._mapper
 
         mapper = pattern.PickleMapper()
-
-        if self.filetype == 'xml':
-            dataMapper = pattern.XMLMapper()
-
-        if self.filetype == 'json':
-            dataMapper = pattern.JSONMapper()
-
-        #TODO maybe a Factory pattern would be nice..
-        mapper.dataMapper = dataMapper
         self._mapper = mapper
         return self._mapper
 
     @pattern_mapper.setter
     def pattern_mapper(self, mapper):
-        self._file_mapper = mapper
+        self._mapper = mapper

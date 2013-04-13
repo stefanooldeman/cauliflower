@@ -13,16 +13,16 @@ class TestPatternXMLMapper(unittest.TestCase):
         self.mapper = pattern.XMLMapper()
 
     def test_iterator_finds_items(self):
-        self.mapper.filepath = thedir + '/dummy_import.xml'
-        xs = self.mapper.iterator()
+        filepath = thedir + '/dummy_import.xml'
+        xs = self.mapper.iterator(filepath)
         self.assertEqual(len(xs), 3)
 
     def test_iterator_finds_nothing(self):
-        self.mapper.filepath = thedir + '/empty_import.xml'
-        xs = self.mapper.iterator()
+        filepath = thedir + '/empty_import.xml'
+        xs = self.mapper.iterator(filepath)
         self.assertEqual(len(xs), 0)
 
     def test_iterator_finds_items(self):
-        self.mapper.filepath = thedir + '/dummy_import.xml'
-        xs = self.mapper.iterator()
+        filepath = thedir + '/dummy_import.xml'
+        xs = self.mapper.iterator(filepath)
         self.assertEqual(len(xs), 3)

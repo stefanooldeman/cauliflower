@@ -1,9 +1,10 @@
 import json
+import xml.parsers.expat
+import xml.dom.minidom
+from xml.dom.minidom import Node
+
 from cauliflower.domain.abstract import DataMapper, Entity
 from .entity import Pattern
-
-import xml.parsers.expat
-from xml.dom.minidom import Node
 
 
 class XMLMapper(DataMapper):
@@ -38,8 +39,9 @@ class XMLMapper(DataMapper):
                 rc.append(node.data)
         return None if len(rc) == 0 else ''.join(rc)
 
-    def iterator(self, doc):
+    def iterator(self, filepath):
         try:
+            doc = xml.dom.minidom.parse(filepath)
             result = doc.getElementsByTagName('pattern')
         except xml.parsers.expat.ExpatError:
             result = []
@@ -67,5 +69,7 @@ class JSONMapper(DataMapper):
         obj.diagram = data.get('diagram')
         return obj
 
-    def iterator(self, data=None):
+    def iterator(self, filepath):
+        fileref = open(filepath, 'r')
+        data = fileref.read()
         json.loads(data)
